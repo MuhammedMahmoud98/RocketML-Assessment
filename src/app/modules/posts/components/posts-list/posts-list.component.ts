@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Post } from '../../../../models/post.model';
 import { PostsDialogueComponent } from '../../../../shared/components/posts-dialogue/posts-dialogue.component';
 
@@ -11,9 +12,17 @@ import { PostsDialogueComponent } from '../../../../shared/components/posts-dial
 export class PostsListComponent implements OnInit {
   @Input() posts: Post[];
 
+  searchForm: FormGroup;
+
   constructor(private readonly dialog: MatDialog) { }
 
   ngOnInit(): void {
+  }
+
+  createSearchForm(): void {
+    this.searchForm = new FormGroup({
+      search: new FormControl(''),
+    });
   }
 
   openDialog(mode, post: Partial<Post> = {}) {
@@ -21,7 +30,7 @@ export class PostsListComponent implements OnInit {
       PostsDialogueComponent,
       {
         panelClass: 'custom-dialog-container',
-        minWidth: 600,
+        width: '600px',
         data: {
           dialogTitle: mode === 'add' ? 'Add post dialog' : 'Edit post dialog',
           mode,

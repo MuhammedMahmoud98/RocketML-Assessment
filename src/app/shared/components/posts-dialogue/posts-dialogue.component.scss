@@ -1,0 +1,16 @@
+@import "../../../../assets/scss/variables";
+
+.post-dialog {
+  .dialog-head {
+    background-color: $light-bg;
+    padding: 1rem;
+    color: $primary-color;
+    font-size: map-get($font-sizes, 'normal');
+    font-weight: 500;
+  }
+
+  .dialog-body {
+    background-color: #fff;
+    padding: 0.5rem 1rem;
+  }
+}

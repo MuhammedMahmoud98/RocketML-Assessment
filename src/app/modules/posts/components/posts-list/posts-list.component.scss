@@ -1,0 +1,52 @@
+@import "../../../../../assets/scss/variables";
+@mixin flexBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flexAlignCenter {
+  display: flex;
+  align-items: center;
+}
+
+.posts-list {
+  min-height: calc(100vh - 64px);
+  padding: 0.5rem 1rem;
+  .list-header {
+    @include flexBetween;
+    .header-title {
+      font-size: map-get($font-sizes, 'large');
+      font-weight: 500;
+    }
+  }
+  .post-search-form {
+
+  }
+  .posts {
+    .post-item {
+      margin-bottom: 0.3rem;
+      cursor: pointer;
+      @include flexBetween;
+      .item-left {
+        @include flexAlignCenter;
+        .post-title {
+          margin-left: 0.5rem;
+          text-overflow: ellipsis;
+          color: $primary-color;
+        }
+      }
+      .item-right {
+        @include flexAlignCenter
+      }
+      &:hover {
+        background-color: rgba($primary-color, 0.12);
+      }
+    }
+  }
+}
+
+
+:host::ng-deep label {
+  margin-bottom: 3px!important;
+}

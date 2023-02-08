@@ -1,7 +1,5 @@
-import { counterReducer } from './counter.reducer';
-import { loginReducer } from './login.reducer';
+import { postReducer } from './posts.reducer';
 
 export const globalReducers = {
-  counterReducer,
-  loginReducer,
+  postReducer,
 };

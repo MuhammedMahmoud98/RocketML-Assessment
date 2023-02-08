@@ -1,3 +1,25 @@
-<mat-progress-bar *ngIf="isLoading$ | async" class="position-fixed" mode="indeterminate"></mat-progress-bar>
-<router-outlet></router-outlet>
+<!--<app-nav-bar></app-nav-bar>-->
+<!--<router-outlet></router-outlet>-->
+<mat-drawer-container class="example-container min-vh-100" autosize>
+  <!-- SIDE NAV -->
+  <mat-drawer #drawer class="example-sidenav side-nav" mode="side" opened>
+    <mat-toolbar [style]="{backgroundColor: '#0B3574'}">
+      <img src="assets/images/logo.png" class="logo-img" alt="Logo">
+    </mat-toolbar>
+    <!-- POSTS LIST -->
+    <mat-progress-bar *ngIf="isPostsLoading$ | async" mode="indeterminate"></mat-progress-bar>
+    <app-posts-list [posts]="posts$ | async"></app-posts-list>
+  </mat-drawer>
 
+  <!-- APP WRAPPER -->
+  <div class="example-sidenav-content">
+    <mat-toolbar>
+      <button (click)="drawer.toggle()" mat-icon-button aria-label="Example icon-button with a heart icon">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar>
+    <!-- ROUTES -->
+    <router-outlet></router-outlet>
+  </div>
+
+</mat-drawer-container>

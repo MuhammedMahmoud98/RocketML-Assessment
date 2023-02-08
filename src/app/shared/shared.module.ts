@@ -1,14 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LanguageSwitcherComponent } from './components/language-switcher/language-switcher.component';
-import {MaterialApisModule} from "../modules/material-apis/material-apis.module";
-
-
+import { MaterialApisModule } from './material-apis/material-apis.module';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { TruncatePipe } from './pipes/truncate.pipe';
+import { PostsDialogueComponent } from './components/posts-dialogue/posts-dialogue.component';
+import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 
 @NgModule({
   declarations: [
     LanguageSwitcherComponent,
+    NavBarComponent,
+    TruncatePipe,
+    PostsDialogueComponent,
+    SnackBarComponent,
   ],
   imports: [
     CommonModule,
@@ -21,6 +27,9 @@ import {MaterialApisModule} from "../modules/material-apis/material-apis.module"
     ReactiveFormsModule,
     LanguageSwitcherComponent,
     MaterialApisModule,
+    NavBarComponent,
+    TruncatePipe,
+    PostsDialogueComponent,
   ],
 })
 export class SharedModule { }

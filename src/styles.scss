@@ -42,3 +42,35 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
 * {
   outline: none !important;
 }
+
+
+
+//#00a884
+
+// SCROLL BAR
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba($primary-color, 0.1);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $primary-color;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+::ng-deep  {
+  .custom-dialog-container .mat-dialog-container  {
+    padding: 0 !important;
+  }
+}

@@ -1,0 +1,34 @@
+<mat-progress-bar *ngIf="isDialogLoading$ | async" mode="indeterminate"></mat-progress-bar>
+<section class="post-dialog">
+  <div class="dialog-head">
+    <div class="dialog-title">
+      {{data?.dialogTitle}}
+    </div>
+  </div>
+  <div class="dialog-body">
+    <form [formGroup]="postForm" (ngSubmit)="mode === 'add' ? addPost() : updatePost()">
+      <div>
+        <mat-form-field appearance="legacy" class="w-100">
+          <mat-label>Post title</mat-label>
+          <input autocomplete="off" formControlName="title" matInput placeholder="Enter post title">
+          <span matSuffix class="material-icons-outlined primary-text">
+             subtitles
+          </span>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="legacy" class="w-100">
+          <mat-label>Post body</mat-label>
+          <input autocomplete="off" formControlName="body" matInput placeholder="Enter post body">
+          <span matSuffix class="material-icons-outlined primary-text">
+            closed_caption
+          </span>
+        </mat-form-field>
+      </div>
+      <div class="text-right">
+        <button mat-button class="mr-2" mat-dialog-close>cancel</button>
+        <button mat-button color="primary" class="mat-raised-button" [disabled]="postForm.invalid || (isDialogLoading$ | async)">{{mode === 'add' ? 'Add' : 'Update'}}</button>
+      </div>
+    </form>
+  </div>
+</section>

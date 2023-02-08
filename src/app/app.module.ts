@@ -11,11 +11,13 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 import { globalReducers } from './store/reducers';
-import { MaterialApisModule } from './modules/material-apis/material-apis.module';
 import {EffectsModule} from "@ngrx/effects";
 import {LoginEffects} from "./store/effects/login.effect";
 import {LoginService} from "./services/login.service";
 import {SharedModule} from "./shared/shared.module";
+import {PostsModule} from "./modules/posts/posts.module";
+import {PostsService} from "./services/posts.service";
+import {PostsEffect} from "./store/effects/posts.effect";
 // handles translation
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -30,8 +32,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialApisModule,
-    EffectsModule.forRoot([LoginEffects]),
+    EffectsModule.forRoot([PostsEffect]),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -45,8 +46,9 @@ export function HttpLoaderFactory(http: HttpClient) {
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
+    PostsModule,
   ],
-  providers: [LoginService],
+  providers: [PostsService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

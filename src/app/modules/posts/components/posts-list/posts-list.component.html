@@ -1,0 +1,43 @@
+<section class="posts-list shadow-sm">
+  <div class="list-header">
+    <span class="header-title">Posts</span>
+    <div class="header-actions">
+      <button mat-mini-fab color="primary" (click)="openDialog('add')" aria-label="Example icon button with a menu icon">
+        <span class="material-icons-outlined">
+          add
+        </span>
+      </button>
+    </div>
+  </div>
+  <!-- POST SEARCH FORM -->
+  <div class="post-search-form mt-2">
+    <form>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Posts search</mat-label>
+        <input autocomplete="off" matInput placeholder="Search for your post">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </form>
+  </div>
+  <!-- ALL POSTS -->
+  <div class="posts">
+    <div class="post-item" *ngFor="let post of posts">
+      <div class="item-left">
+<!--        <mat-checkbox color="primary" class="example-margin"></mat-checkbox>-->
+        <span class="post-title" [matTooltip]="post?.title">{{post?.title | truncate: 25}}</span>
+      </div>
+      <div class="item-right">
+        <button class="tiny-rounded-button" (click)="openDialog('edit', post)" matRipple>
+          <span class="material-icons-outlined">
+            edit
+          </span>
+        </button>
+        <button class="tiny-rounded-button" matRipple>
+          <span class="material-icons-outlined">
+            delete
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

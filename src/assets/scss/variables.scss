@@ -1,3 +1,13 @@
-$sidebar-color: #0d2222;
-$primary-color: #00807d;
-$text-muted: rgba(black, 0.4)
+$sidebar-color: rgb(11, 53, 116);
+$primary-color: #005580;
+$text-muted: rgba(black, 0.4);
+$light-bg: rgba(black, 0.04);
+$success-color: rgb(70,201,58);
+$error-color: rgb(255,71,87);
+$light-shadow: rgba(black, 0.1) 0px 4px 12px;
+$font-sizes: (
+  'small': 12px,
+  'normal': 18px,
+  'large': 22px,
+  'x-large': 30px,
+);

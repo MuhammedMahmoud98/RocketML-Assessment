@@ -17,12 +17,17 @@ export class PostsListComponent implements OnInit {
   constructor(private readonly dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.createSearchForm();
   }
 
   createSearchForm(): void {
     this.searchForm = new FormGroup({
       search: new FormControl(''),
     });
+  }
+
+  get getSearchValue() {
+    return this.searchForm.get('search').value;
   }
 
   openDialog(mode, post: Partial<Post> = {}) {
@@ -42,5 +47,9 @@ export class PostsListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  trackByFn(index): number {
+    return index;
   }
 }

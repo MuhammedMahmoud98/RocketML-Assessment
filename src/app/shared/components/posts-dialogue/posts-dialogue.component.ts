@@ -1,5 +1,5 @@
 import {
-  AfterViewInit,
+  AfterViewInit, ChangeDetectorRef,
   Component, Inject, OnDestroy, OnInit,
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -34,6 +34,7 @@ export class PostsDialogueComponent implements OnInit, OnDestroy, AfterViewInit 
     private readonly store: Store,
     private readonly dialogRef: MatDialogRef<PostsDialogueComponent>,
     private postService: PostsService,
+    private cdRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -49,6 +50,7 @@ export class PostsDialogueComponent implements OnInit, OnDestroy, AfterViewInit 
       const { title, body } = this.data.post;
       this.postForm.patchValue({ title, body });
       console.log(this.postForm.value);
+      this.cdRef.detectChanges();
     }
   }
 

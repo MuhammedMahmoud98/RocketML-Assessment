@@ -9,6 +9,7 @@ import { PostsDialogueComponent } from './components/posts-dialogue/posts-dialog
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { PostsFilterPipe } from './pipes/posts-filter.pipe';
 import { DeleteDialogeComponent } from './components/delete-dialoge/delete-dialoge.component';
+import { CommentsTableComponent } from './components/comments-table/comments-table.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { DeleteDialogeComponent } from './components/delete-dialoge/delete-dialo
     SnackBarComponent,
     PostsFilterPipe,
     DeleteDialogeComponent,
+    CommentsTableComponent,
   ],
   imports: [
     CommonModule,
@@ -26,15 +28,16 @@ import { DeleteDialogeComponent } from './components/delete-dialoge/delete-dialo
     ReactiveFormsModule,
     MaterialApisModule,
   ],
-    exports: [
-        FormsModule,
-        ReactiveFormsModule,
-        LanguageSwitcherComponent,
-        MaterialApisModule,
-        NavBarComponent,
-        TruncatePipe,
-        PostsDialogueComponent,
-        PostsFilterPipe,
-    ],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule,
+    LanguageSwitcherComponent,
+    MaterialApisModule,
+    NavBarComponent,
+    TruncatePipe,
+    PostsDialogueComponent,
+    PostsFilterPipe,
+    CommentsTableComponent,
+  ],
 })
 export class SharedModule { }

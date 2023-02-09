@@ -69,3 +69,15 @@ export const DeletePostFailed = createAction(
   props<{errorMessage?: string}>(),
 );
 // **** DELETE POST END **** //
+
+// **** ACTIVE POST START **** //
+export const ActiveSelectedPost = createAction(
+  '[POSTS] ACTIVE SELECTED POST',
+  props<{postId?: number}>(),
+);
+
+export const UpdatePostDescription = createAction(
+  '[POSTS] UPDATE POST DESCRIPTION',
+  props<{postId?: number; newDescription?: string}>(),
+);
+// **** ACTIVE POST END **** //

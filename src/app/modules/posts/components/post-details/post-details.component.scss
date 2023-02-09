@@ -1,0 +1,57 @@
+@import "../../../../../assets/scss/variables";
+
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+}
+
+@mixin flexBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.post-details {
+  margin-top: 64px;
+  .details-header {
+    @include flexBetween;
+    margin-bottom: 0.5rem;
+  }
+  .quill-editor {
+    position: relative;
+    margin-top: 1rem;
+    .post-description {
+      margin-bottom: 1rem;
+      @include flexCenter;
+      .description-title {
+        font-size: map-get($font-sizes, 'normal');
+        font-weight: 500;
+      }
+    }
+  }
+
+  .expansion-description {
+    .panel-title {
+      font-weight: 500;
+    }
+  }
+}
+
+
+.empty-post-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: calc(100vh - 50px);
+  text-align: center;
+  .rocket-img {
+    width: 250px;
+  }
+  .app-welcome {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: map-get($font-sizes, 'large');
+  }
+}

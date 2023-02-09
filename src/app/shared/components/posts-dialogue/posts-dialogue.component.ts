@@ -34,7 +34,7 @@ export class PostsDialogueComponent implements OnInit, OnDestroy, AfterViewInit 
     private readonly store: Store,
     private readonly dialogRef: MatDialogRef<PostsDialogueComponent>,
     private postService: PostsService,
-    private cdRef: ChangeDetectorRef,
+    private readonly cdRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {

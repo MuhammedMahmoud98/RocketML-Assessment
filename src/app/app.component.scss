@@ -2,8 +2,21 @@
 
 .side-nav {
   width: 320px;
+  position: fixed;
 }
 
 .logo-img {
   width: 100px;
+}
+
+.nav-bar {
+  position: fixed;
+  z-index: 999;
+}
+
+
+@media screen and (max-width: 767px) {
+  .side-nav {
+    width: 80%;
+  }
 }

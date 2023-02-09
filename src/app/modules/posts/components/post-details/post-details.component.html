@@ -1,0 +1,65 @@
+<section class="post-details" *ngIf="(selectedPost$ | async) as selectedPost; else emptyPostSection">
+  <div class="details-header">
+    <span class="post-details-title">
+      <span class="material-icons-outlined valid-icon mr-2">
+        beenhere
+      </span>
+      <span>{{selectedPost?.title | titlecase}}</span>
+    </span>
+    <button matTooltip="Post ID" matTooltipPosition="left" mat-mini-fab color="primary">{{selectedPost?.id}}</button>
+  </div>
+  <mat-divider></mat-divider>
+  <!-- EXPANSION DESCRIPTION -->
+  <div class="expansion-description mt-3">
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span class="panel-title">Description content</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p [innerHTML]="selectedPost?.body"></p>
+      <div class="text-right">
+        <button matTooltip="Edit post description" (click)="setQuillActive(selectedPost?.body)" mat-raised-button color="primary">
+          {{activeQuill? 'Close Editor': 'Open Editor'}}
+        </button>
+      </div>
+    </mat-expansion-panel>
+  </div>
+  <!-- QUILL EDITOR -->
+  <div class="quill-editor mat-card p-3 mb-3">
+    <!-- DISABLED LAYER -->
+    <div class="disabled-layer" *ngIf="!activeQuill"></div>
+    <div class="post-description">
+      <span class="material-icons-outlined primary-text mr-2">
+        description
+      </span>
+      <span class="description-title">Description Editor</span>
+    </div>
+    <quill-editor [disabled]="!activeQuill" [(ngModel)]="quillData" [trimOnValidation]="true"></quill-editor>
+    <div class="quill-actions mt-2 text-right">
+      <button mat-button class="mr-2" matTooltip="Reset description" (click)="resetQuill()">Reset</button>
+      <button mat-raised-button color="primary" matTooltip="Save description" (click)="saveUpdatedDescription(selectedPost?.id)">Save</button>
+    </div>
+  </div>
+  <!-- COMMENTS TABLE -->
+  <div class="comments-header my-3">
+      <span class="post-details-title">
+      <span class="material-icons-outlined valid-icon mr-2">
+        mark_chat_read
+      </span>
+      <span>Comments Table</span>
+  </span>
+  </div>
+  <mat-divider></mat-divider>
+  <app-comments-table [comments]="selectedPost?.postDetails?.comments"></app-comments-table>
+</section>
+
+
+<ng-template #emptyPostSection>
+  <div class="empty-post-section">
+    <img src="assets/images/rocketML.svg" class="rocket-img" alt="empty-img-svg">
+    <span class="app-welcome">Welcome to RocketML APP</span>
+    <span>Please select a post to show its details..</span>
+  </div>
+</ng-template>

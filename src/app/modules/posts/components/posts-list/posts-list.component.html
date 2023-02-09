@@ -21,17 +21,17 @@
   </div>
   <!-- ALL POSTS -->
   <div class="posts">
-    <div class="post-item" *ngFor="let post of !getSearchValue ? posts : posts | postsFilter: getSearchValue;let i = index;trackBy:trackByFn">
+    <div class="post-item" [class.active-post]="post.isSelected" (click)="selectPost(post?.id)" *ngFor="let post of !getSearchValue ? posts : posts | postsFilter: getSearchValue;let i = index;trackBy:trackByFn">
       <div class="item-left">
         <span class="post-title" [matTooltip]="post?.title">{{post?.title | truncate: 25}}</span>
       </div>
       <div class="item-right">
-        <button matTooltip="Edit post" class="tiny-rounded-button" (click)="openDialog('edit', post)" matRipple>
+        <button matTooltip="Edit post" class="tiny-rounded-button" (click)="$event.stopPropagation();openDialog('edit', post)" matRipple>
           <span class="material-icons-outlined">
             edit
           </span>
         </button>
-        <button matTooltip="Delete post" (click)="deletePost(post, i)" class="tiny-rounded-button" matRipple>
+        <button matTooltip="Delete post" (click)="$event.stopPropagation();deletePost(post, i)" class="tiny-rounded-button" matRipple>
           <span class="material-icons-outlined">
             delete
           </span>

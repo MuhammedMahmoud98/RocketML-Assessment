@@ -1,8 +1,6 @@
-<!--<app-nav-bar></app-nav-bar>-->
-<!--<router-outlet></router-outlet>-->
 <mat-drawer-container class="example-container min-vh-100" autosize>
   <!-- SIDE NAV -->
-  <mat-drawer #drawer class="example-sidenav side-nav" mode="side" opened>
+  <mat-drawer #drawer class="example-sidenav side-nav" [mode]="sideBarMode" opened>
     <mat-toolbar [style]="{backgroundColor: '#0B3574'}">
       <img src="assets/images/logo.png" class="logo-img" alt="Logo">
     </mat-toolbar>
@@ -13,10 +11,11 @@
 
   <!-- APP WRAPPER -->
   <div class="example-sidenav-content">
-    <mat-toolbar>
+    <mat-toolbar class="nav-bar">
       <button (click)="drawer.toggle()" mat-icon-button aria-label="Example icon-button with a heart icon">
         <mat-icon>menu</mat-icon>
       </button>
+      <span>RocketML</span>
     </mat-toolbar>
     <!-- ROUTES -->
     <router-outlet></router-outlet>

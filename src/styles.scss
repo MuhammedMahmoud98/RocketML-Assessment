@@ -74,3 +74,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     padding: 0 !important;
   }
 }
+
+
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';

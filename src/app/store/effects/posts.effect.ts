@@ -17,7 +17,6 @@ import {
   UpdatePostSuccess,
 } from '../actions/post.action';
 import { PostsService } from '../../services/posts.service';
-import { PostsDialogueComponent } from '../../shared/components/posts-dialogue/posts-dialogue.component';
 
 @Injectable()
 export class PostsEffect {
@@ -30,7 +29,6 @@ export class PostsEffect {
     ofType(GetPosts),
     mergeMap((action) => this.postsService.loadPosts().pipe(
       map((allPostsResult) => GetPostsSuccess({ body: allPostsResult })),
-      tap((allPosts) => console.log(allPosts, 'ALL POSTS')),
     )),
     catchError((err) => of(GetPostsFailed({ errorMessage: 'err' }))),
   ));
@@ -43,9 +41,9 @@ export class PostsEffect {
           ...postResponse,
           isSelected: false,
           postDetails: {
-            postId: 1,
+            postId: postResponse.id,
             comments: [],
-            description: '',
+            description: postResponse.body,
           },
         },
       })),

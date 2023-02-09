@@ -38,3 +38,30 @@
   color: #fff;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
+
+.active-post {
+  background-color: rgba($primary-color, 0.12);
+}
+
+.disabled-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(#fff,0.8);
+  z-index: 800;
+}
+
+.post-details-title {
+  display: flex;
+  align-items: center;
+  font-size: map-get($font-sizes, 'medium');
+  font-weight: 500;
+  .valid-icon {
+    color: $primary-color;
+    font-size: map-get($font-sizes, 'large');
+  }
+}

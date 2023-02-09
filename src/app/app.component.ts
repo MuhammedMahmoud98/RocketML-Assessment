@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { LoginState } from './store/reducers/login.reducer';
 import { GetPosts } from './store/actions/post.action';
 import { getPostsSelector, isPostsLoadingSelector } from './store/selectors/posts.selector';
 import { Post } from './models/post.model';
+import {MatDrawerMode} from "@angular/material/sidenav";
 
 @Component({
   selector: 'app-root',
@@ -17,12 +16,15 @@ export class AppComponent implements OnInit {
 
   posts$: Observable<Post[]>;
 
+  sideBarMode: MatDrawerMode = 'side';
+
   constructor(
     private readonly store: Store,
   ) {
   }
 
   ngOnInit() {
+    this.adjustSideBarOnMobileScreen();
     this.postsSelectors();
     this.loadAllPosts();
   }
@@ -34,5 +36,22 @@ export class AppComponent implements OnInit {
   postsSelectors(): void {
     this.isPostsLoading$ = this.store.pipe(select(isPostsLoadingSelector));
     this.posts$ = this.store.pipe(select(getPostsSelector));
+  }
+
+  @HostListener('window:resize', ['$event'])
+  windowResizeListener(event) {
+    if (event.target.innerWidth > 767) {
+      this.sideBarMode = 'side';
+    } else {
+      this.sideBarMode = 'over';
+    }
+  }
+
+  adjustSideBarOnMobileScreen() {
+    if (window.innerWidth > 767) {
+      this.sideBarMode = 'side';
+    } else {
+      this.sideBarMode = 'over';
+    }
   }
 }

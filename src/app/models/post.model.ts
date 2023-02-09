@@ -1,18 +1,4 @@
-export class Comment {
-  postId?: number;
-
-  id?: number;
-
-  name?: string;
-
-  email?: string;
-
-  body?: string;
-
-  createdAt = new Date();
-
-  isSelected = false;
-}
+import { Comment } from './comments.model';
 
 export interface PostDetails {
   comments: Comment[];

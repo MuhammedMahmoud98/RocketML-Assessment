@@ -1,29 +1,34 @@
-import { createReducer, on } from '@ngrx/store';
+import { createAction, createReducer, on } from '@ngrx/store';
 import { state } from '@angular/animations';
-import { Post } from '../../models/post.model';
+import { Post, PostDetails } from '../../models/post.model';
 import {
+  ActiveSelectedPost,
   AddPost,
   AddPostFailed,
   AddPostSuccess, DeletePost, DeletePostFailed, DeletePostSuccess,
   GetPosts,
   GetPostsFailed,
   GetPostsSuccess,
-  UpdatePost,
+  UpdatePost, UpdatePostDescription,
   UpdatePostFailed,
   UpdatePostSuccess,
 } from '../actions/post.action';
+import { GetComments, GetCommentsSuccess } from '../actions/comments.action';
 
 export interface PostState {
   posts?: Post[];
   isPostsLoading?: boolean;
   isCommentsLoading?: boolean;
   isDialogLoading?: boolean;
+  selectedPostId?: number;
+  fetchedPosts?: number[];
   hasError?: boolean;
   errorMessage?: string;
 }
 
 const initialState: PostState = {
   posts: [],
+  fetchedPosts: [],
   isCommentsLoading: false,
   isPostsLoading: false,
   isDialogLoading: false,
@@ -34,11 +39,23 @@ const initialState: PostState = {
 export const postReducer = createReducer(
   initialState,
   on(GetPosts, (state) => ({ ...state, isPostsLoading: true })),
-  on(GetPostsSuccess, (state, action) => ({
-    ...state,
-    posts: action.body,
-    isPostsLoading: false,
-  })),
+  on(GetPostsSuccess, (state, action) => {
+    const actionPosts = action.body;
+    const newPosts = actionPosts.map((post) => ({
+      ...post,
+      isSelected: false,
+      postDetails: {
+        description: post.body,
+        postId: post.id,
+        comments: [],
+      } as PostDetails,
+    }));
+    return {
+      ...state,
+      posts: newPosts,
+      isPostsLoading: false,
+    };
+  }),
   on(GetPostsFailed, (state, action) => ({
     ...state,
     hasError: true,
@@ -93,4 +110,56 @@ export const postReducer = createReducer(
     ...state,
     isDialogLoading: false,
   })),
+  on(ActiveSelectedPost, (state, action) => {
+    const { posts } = state;
+    const newPosts = posts.map((post) => ({ ...post, isSelected: post.id === action.postId }));
+    return {
+      ...state,
+      posts: newPosts,
+      selectedPostId: action.postId,
+    };
+  }),
+  on(GetComments, (state, action) => ({
+    ...state,
+    isCommentsLoading: true,
+  })),
+  on(GetCommentsSuccess, (state, action) => {
+    const { posts } = state;
+    const newPosts = posts.map((post) => {
+      if (post.id === action.postId) {
+        post = {
+          ...post,
+          postDetails: {
+            description: post.body,
+            postId: action.postId,
+            comments: [...action.comments],
+          },
+        };
+      }
+      return post;
+    });
+    const fetchedPosts = [...state.fetchedPosts, action.postId];
+    return {
+      ...state,
+      posts: newPosts,
+      isCommentsLoading: false,
+      fetchedPosts,
+    };
+  }),
+  on(UpdatePostDescription, (state, action) => {
+    const { posts } = state;
+    const newPosts = posts.map((post) => {
+      if (post.id === action.postId) {
+        return {
+          ...post,
+          body: action.newDescription,
+        };
+      }
+      return post;
+    });
+    return {
+      ...state,
+      posts: newPosts,
+    };
+  }),
 );

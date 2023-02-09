@@ -7,17 +7,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { QuillModule } from 'ngx-quill';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 import { globalReducers } from './store/reducers';
-import {EffectsModule} from "@ngrx/effects";
-import {LoginEffects} from "./store/effects/login.effect";
-import {LoginService} from "./services/login.service";
-import {SharedModule} from "./shared/shared.module";
-import {PostsModule} from "./modules/posts/posts.module";
-import {PostsService} from "./services/posts.service";
-import {PostsEffect} from "./store/effects/posts.effect";
+import { SharedModule } from './shared/shared.module';
+import { PostsModule } from './modules/posts/posts.module';
+import { PostsService } from './services/posts.service';
+import { PostsEffect } from './store/effects/posts.effect';
+import { CommentsService } from './services/comments.service';
+import { CommentsEffect } from './store/effects/comments.effect';
 // handles translation
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -32,7 +33,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    EffectsModule.forRoot([PostsEffect]),
+    EffectsModule.forRoot([PostsEffect, CommentsEffect]),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -47,8 +48,9 @@ export function HttpLoaderFactory(http: HttpClient) {
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
     PostsModule,
+    QuillModule.forRoot(),
   ],
-  providers: [PostsService],
+  providers: [PostsService, CommentsService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

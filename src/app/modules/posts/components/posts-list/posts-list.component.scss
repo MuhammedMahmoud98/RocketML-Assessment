@@ -25,8 +25,8 @@
   }
   .posts {
     .post-item {
-      margin-bottom: 0.3rem;
       cursor: pointer;
+      padding: 0.5rem 0.3rem;
       @include flexBetween;
       .item-left {
         @include flexAlignCenter;

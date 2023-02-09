@@ -1,24 +1,36 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl, FormGroup } from '@angular/forms';
+import { select, Store } from '@ngrx/store';
+import {takeUntil, tap} from 'rxjs/operators';
 import { Post } from '../../../../models/post.model';
 import { PostsDialogueComponent } from '../../../../shared/components/posts-dialogue/posts-dialogue.component';
-import { DeleteDialogeComponent } from '../../../../shared/components/delete-dialoge/delete-dialoge.component';
+import { ActiveSelectedPost } from '../../../../store/actions/post.action';
+import { GetComments } from '../../../../store/actions/comments.action';
+import { getFetchedPostsIds } from '../../../../store/selectors/posts.selector';
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-posts-list',
   templateUrl: './posts-list.component.html',
   styleUrls: ['./posts-list.component.scss'],
 })
-export class PostsListComponent implements OnInit {
+export class PostsListComponent implements OnInit, OnDestroy {
   @Input() posts: Post[];
 
   searchForm: FormGroup;
 
-  constructor(private readonly dialog: MatDialog) { }
+  destroyed$: Subject<boolean> = new Subject<boolean>();
+
+  constructor(private readonly dialog: MatDialog, private readonly store: Store) { }
 
   ngOnInit(): void {
     this.createSearchForm();
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   createSearchForm(): void {
@@ -44,10 +56,6 @@ export class PostsListComponent implements OnInit {
         },
       },
     );
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
   trackByFn(index): number {
@@ -67,5 +75,18 @@ export class PostsListComponent implements OnInit {
         mode,
       },
     });
+  }
+
+  selectPost(postId?: number) {
+    this.store.pipe(
+      select(getFetchedPostsIds),
+      tap((fetchedIds) => {
+        this.store.dispatch(ActiveSelectedPost({ postId }));
+        if (!fetchedIds.includes(postId)) {
+          this.store.dispatch(GetComments({ postId }));
+        }
+      }),
+      takeUntil(this.destroyed$),
+    ).subscribe();
   }
 }

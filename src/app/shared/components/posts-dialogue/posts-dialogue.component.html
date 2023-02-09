@@ -5,7 +5,7 @@
       {{data?.dialogTitle}}
     </div>
   </div>
-  <div class="dialog-body">
+  <div class="dialog-body" *ngIf="mode !== 'delete'; else deleteBody">
     <form [formGroup]="postForm" (ngSubmit)="mode === 'add' ? addPost() : updatePost()">
       <div>
         <mat-form-field appearance="legacy" class="w-100">
@@ -31,4 +31,14 @@
       </div>
     </form>
   </div>
+  <!-- DELETE BODY -->
+  <ng-template #deleteBody>
+    <div class="delete-dialog">
+      <p>Are you sure to delete post of title <b>{{data?.title}}</b> ?</p>
+      <div class="text-right">
+        <button mat-button class="mr-2" mat-dialog-close>cancel</button>
+        <button mat-button color="primary" class="mat-raised-button" (click)="deletePost()" [disabled]="(isDialogLoading$ | async)">Yes</button>
+      </div>
+    </div>
+  </ng-template>
 </section>

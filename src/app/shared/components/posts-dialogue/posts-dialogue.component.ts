@@ -8,7 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { takeUntil, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
-import { AddPost, UpdatePost } from '../../../store/actions/post.action';
+import { AddPost, DeletePost, UpdatePost } from '../../../store/actions/post.action';
 import { PostsService } from '../../../services/posts.service';
 import { isDialogLoadingSelector } from '../../../store/selectors/posts.selector';
 import { Post, UpdatePostPayload } from '../../../models/post.model';
@@ -38,18 +38,16 @@ export class PostsDialogueComponent implements OnInit, OnDestroy, AfterViewInit 
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data, 'DIALOG DATA');
     this.createPostForm();
     this.dialogListener();
     this.selectDialogLoaderState();
   }
 
   ngAfterViewInit(): void {
+    this.mode = this.data.mode;
     if (this.data.mode === 'edit') {
-      this.mode = this.data.mode;
       const { title, body } = this.data.post;
       this.postForm.patchValue({ title, body });
-      console.log(this.postForm.value);
       this.cdRef.detectChanges();
     }
   }
@@ -89,15 +87,22 @@ export class PostsDialogueComponent implements OnInit, OnDestroy, AfterViewInit 
     this.store.dispatch(UpdatePost({ updatePostPayload: postPayload }));
   }
 
+  deletePost() {
+    const { id, i } = this.data;
+    this.store.dispatch(DeletePost({ postId: id, index: i }));
+  }
+
   dialogListener(): void {
     this.postService.closeDialog$.pipe(
       tap((dialogValue) => {
         if (dialogValue) {
           this.dialogRef.close();
           if (this.mode === 'add') {
-            this.openSnackBar('success-snack-bar', 'Post added successfully');
+            this.openSnackBar('success-snack-bar', 'Post has been added successfully');
           } else if (this.mode === 'edit') {
-            this.openSnackBar('success-snack-bar', 'Post updated successfully');
+            this.openSnackBar('success-snack-bar', 'Post has been updated successfully');
+          } else {
+            this.openSnackBar('success-snack-bar', 'Post has been deleted successfully');
           }
           this.postService.closeDialog$.next(false);
         }
@@ -115,4 +120,7 @@ interface DialogData {
   dialogTitle?: string;
   mode?: string;
   post?: Post,
+  title?: string;
+  id?: number;
+  i?: number;
 }

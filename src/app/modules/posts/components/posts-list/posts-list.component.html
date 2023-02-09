@@ -2,7 +2,7 @@
   <div class="list-header">
     <span class="header-title">Posts</span>
     <div class="header-actions">
-      <button mat-mini-fab color="primary" (click)="openDialog('add')" aria-label="Example icon button with a menu icon">
+      <button matTooltip="Add post" matTooltipPosition="left" mat-mini-fab color="primary" (click)="openDialog('add')" aria-label="Example icon button with a menu icon">
         <span class="material-icons-outlined">
           add
         </span>
@@ -26,12 +26,12 @@
         <span class="post-title" [matTooltip]="post?.title">{{post?.title | truncate: 25}}</span>
       </div>
       <div class="item-right">
-        <button class="tiny-rounded-button" (click)="openDialog('edit', post)" matRipple>
+        <button matTooltip="Edit post" class="tiny-rounded-button" (click)="openDialog('edit', post)" matRipple>
           <span class="material-icons-outlined">
             edit
           </span>
         </button>
-        <button class="tiny-rounded-button" matRipple>
+        <button matTooltip="Delete post" (click)="deletePost(post, i)" class="tiny-rounded-button" matRipple>
           <span class="material-icons-outlined">
             delete
           </span>

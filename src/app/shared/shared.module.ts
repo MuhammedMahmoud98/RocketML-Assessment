@@ -8,6 +8,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
 import { PostsDialogueComponent } from './components/posts-dialogue/posts-dialogue.component';
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { PostsFilterPipe } from './pipes/posts-filter.pipe';
+import { DeleteDialogeComponent } from './components/delete-dialoge/delete-dialoge.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PostsFilterPipe } from './pipes/posts-filter.pipe';
     PostsDialogueComponent,
     SnackBarComponent,
     PostsFilterPipe,
+    DeleteDialogeComponent,
   ],
   imports: [
     CommonModule,

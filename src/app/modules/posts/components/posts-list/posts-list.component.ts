@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Post } from '../../../../models/post.model';
 import { PostsDialogueComponent } from '../../../../shared/components/posts-dialogue/posts-dialogue.component';
+import { DeleteDialogeComponent } from '../../../../shared/components/delete-dialoge/delete-dialoge.component';
 
 @Component({
   selector: 'app-posts-list',
@@ -51,5 +52,20 @@ export class PostsListComponent implements OnInit {
 
   trackByFn(index): number {
     return index;
+  }
+
+  deletePost(post: Post, i: number, mode: string = 'delete') {
+    const { id, title } = post;
+    this.dialog.open(PostsDialogueComponent, {
+      panelClass: 'custom-dialog-container',
+      width: '600px',
+      data: {
+        dialogTitle: 'Delete post dialog',
+        title,
+        id,
+        i,
+        mode,
+      },
+    });
   }
 }

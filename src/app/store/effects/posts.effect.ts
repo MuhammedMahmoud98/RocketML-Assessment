@@ -8,7 +8,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import {
   AddPost,
   AddPostFailed,
-  AddPostSuccess,
+  AddPostSuccess, DeletePost, DeletePostFailed, DeletePostSuccess,
   GetPosts,
   GetPostsFailed,
   GetPostsSuccess,
@@ -52,7 +52,7 @@ export class PostsEffect {
       tap((finalPostResponse) => this.postsService.closeDialog$.next(true)),
     )),
     catchError((err) => of(AddPostFailed({ errorMessage: 'err' }))),
-  ))
+  ));
 
   updatePost$ = createEffect(() => this.action$.pipe(
     ofType(UpdatePost),
@@ -61,5 +61,14 @@ export class PostsEffect {
       tap(() => this.postsService.closeDialog$.next(true)),
     )),
     catchError((err) => of(UpdatePostFailed({ errorMessage: 'err' }))),
-  ))
+  ));
+
+  deletePost$ = createEffect(() => this.action$.pipe(
+    ofType(DeletePost),
+    switchMap((action) => this.postsService.deletePost(action.postId).pipe(
+      map((deletePostResponse) => DeletePostSuccess({ index: action.index, postId: action.postId })),
+      tap(() => this.postsService.closeDialog$.next(true)),
+    )),
+    catchError((err) => of(DeletePostFailed({ errorMessage: 'err' }))),
+  ));
 }

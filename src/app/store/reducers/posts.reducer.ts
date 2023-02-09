@@ -4,7 +4,7 @@ import { Post } from '../../models/post.model';
 import {
   AddPost,
   AddPostFailed,
-  AddPostSuccess,
+  AddPostSuccess, DeletePost, DeletePostFailed, DeletePostSuccess,
   GetPosts,
   GetPostsFailed,
   GetPostsSuccess,
@@ -62,7 +62,7 @@ export const postReducer = createReducer(
     const { id } = action.body;
     const newPosts = state.posts.map((post) => {
       if (post.id === id) {
-        post = action.body
+        post = action.body;
       }
       return post;
     });
@@ -73,6 +73,23 @@ export const postReducer = createReducer(
     };
   }),
   on(UpdatePostFailed, (state) => ({
+    ...state,
+    isDialogLoading: false,
+  })),
+  on(DeletePost, (state) => ({
+    ...state,
+    isDialogLoading: true,
+  })),
+  on((DeletePostSuccess), (state, action) => {
+    const statePosts = state.posts;
+    const filteredPosts = statePosts.filter((post) => post.id !== action.postId);
+    return {
+      ...state,
+      posts: filteredPosts,
+      isDialogLoading: false,
+    };
+  }),
+  on(DeletePostFailed, (state, action) => ({
     ...state,
     isDialogLoading: false,
   })),

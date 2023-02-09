@@ -52,3 +52,20 @@ export const UpdatePostFailed = createAction(
   props<{errorMessage?: string}>(),
 );
 // **** UPDATE POST END **** //
+
+// **** DELETE POST START **** //
+export const DeletePost = createAction(
+  '[POSTS] DELETE POST',
+  props<{postId?: number, index?: number}>(),
+);
+
+export const DeletePostSuccess = createAction(
+  '[POSTS] DELETE POST SUCCESS',
+  props<{postId?: number, index?: number}>(),
+);
+
+export const DeletePostFailed = createAction(
+  '[POSTS] DELETE POST SUCCESS',
+  props<{errorMessage?: string}>(),
+);
+// **** DELETE POST END **** //

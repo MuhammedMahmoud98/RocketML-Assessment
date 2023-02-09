@@ -23,4 +23,8 @@ export class PostsService {
   updatePost(payload: UpdatePostPayload): Observable<Post> {
     return this.http.put<Post>(`${environment.baseUrl}/${payload.id}`, payload);
   }
+
+  deletePost(postId: number): Observable<object> {
+    return this.http.delete<object>(`${environment.baseUrl}/${postId}`);
+  }
 }

@@ -48,8 +48,8 @@ export class PostsDialogueComponent implements OnInit, OnDestroy, AfterViewInit 
     if (this.data.mode === 'edit') {
       const { title, body } = this.data.post;
       this.postForm.patchValue({ title, body });
-      this.cdRef.detectChanges();
     }
+    this.cdRef.detectChanges();
   }
 
   ngOnDestroy(): void {

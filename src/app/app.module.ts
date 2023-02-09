@@ -19,6 +19,7 @@ import { PostsService } from './services/posts.service';
 import { PostsEffect } from './store/effects/posts.effect';
 import { CommentsService } from './services/comments.service';
 import { CommentsEffect } from './store/effects/comments.effect';
+import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 // handles translation
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -50,7 +51,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     PostsModule,
     QuillModule.forRoot(),
   ],
-  providers: [PostsService, CommentsService],
+  providers: [
+    PostsService,
+    CommentsService,
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

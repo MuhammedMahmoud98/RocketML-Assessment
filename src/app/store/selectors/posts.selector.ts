@@ -36,3 +36,8 @@ export const isCommentsLoadingSelector = createSelector(
   getPostsFeatureSelector,
   (state) => state.isCommentsLoading,
 );
+
+export const hasErrorSelector = createSelector(
+  getPostsFeatureSelector,
+  (state) => state.hasError,
+);

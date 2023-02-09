@@ -8,9 +8,11 @@
     <mat-progress-bar *ngIf="isPostsLoading$ | async" mode="indeterminate"></mat-progress-bar>
     <app-posts-list [posts]="posts$ | async"></app-posts-list>
   </mat-drawer>
-
   <!-- APP WRAPPER -->
   <div class="example-sidenav-content">
+    <div class="material-progress">
+      <mat-progress-bar mode="indeterminate" *ngIf="isCommentsLoading$ | async"></mat-progress-bar>
+    </div>
     <mat-toolbar class="nav-bar">
       <button (click)="drawer.toggle()" mat-icon-button aria-label="Example icon-button with a heart icon">
         <mat-icon>menu</mat-icon>

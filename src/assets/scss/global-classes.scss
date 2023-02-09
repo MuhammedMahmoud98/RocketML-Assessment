@@ -65,3 +65,11 @@
     font-size: map-get($font-sizes, 'large');
   }
 }
+
+.material-progress {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}

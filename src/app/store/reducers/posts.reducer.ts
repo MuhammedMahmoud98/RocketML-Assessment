@@ -13,7 +13,7 @@ import {
   UpdatePostFailed,
   UpdatePostSuccess,
 } from '../actions/post.action';
-import { GetComments, GetCommentsSuccess } from '../actions/comments.action';
+import {GetComments, GetCommentsFailed, GetCommentsSuccess} from '../actions/comments.action';
 
 export interface PostState {
   posts?: Post[];
@@ -66,14 +66,14 @@ export const postReducer = createReducer(
   on(AddPostSuccess, (state, action) => {
     const newPost = action.body;
     const updatedPosts = [...state.posts];
-    updatedPosts.unshift({ ...newPost, id: Math.ceil(Math.random() * 200) });
+    updatedPosts.unshift({ ...newPost, id: Math.ceil(Math.random() * 102) + 100 });
     return {
       ...state,
       posts: updatedPosts,
       isDialogLoading: false,
     };
   }),
-  on(AddPostFailed, (state, action) => ({ ...state, isDialogLoading: false })),
+  on(AddPostFailed, (state, action) => ({ ...state, isDialogLoading: false, hasError: true, })),
   on(UpdatePost, (state) => ({ ...state, isDialogLoading: true })),
   on(UpdatePostSuccess, (state, action) => {
     const { id } = action.body;
@@ -92,6 +92,7 @@ export const postReducer = createReducer(
   on(UpdatePostFailed, (state) => ({
     ...state,
     isDialogLoading: false,
+    hasError: true,
   })),
   on(DeletePost, (state) => ({
     ...state,
@@ -109,6 +110,7 @@ export const postReducer = createReducer(
   on(DeletePostFailed, (state, action) => ({
     ...state,
     isDialogLoading: false,
+    hasError: true,
   })),
   on(ActiveSelectedPost, (state, action) => {
     const { posts } = state;
@@ -146,6 +148,11 @@ export const postReducer = createReducer(
       fetchedPosts,
     };
   }),
+  on(GetCommentsFailed, (state) => ({
+    ...state,
+    isCommentsLoading: false,
+    hasError: true,
+  })),
   on(UpdatePostDescription, (state, action) => {
     const { posts } = state;
     const newPosts = posts.map((post) => {

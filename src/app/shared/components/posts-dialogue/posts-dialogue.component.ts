@@ -30,7 +30,7 @@ export class PostsDialogueComponent implements OnInit, OnDestroy, AfterViewInit 
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public readonly data: DialogData,
-    private snackBar: MatSnackBar,
+    private readonly snackBar: MatSnackBar,
     private readonly store: Store,
     private readonly dialogRef: MatDialogRef<PostsDialogueComponent>,
     private postService: PostsService,

@@ -28,9 +28,9 @@ export class PostsService {
     return this.http.delete<object>(`${environment.baseUrl}/${postId}`);
   }
 
-  newPostAudio() {
-    const audio = new Audio('./assets/audios/new-post.mp3');
+  newPostAudio(audioFile = 'new-post.mp3') {
+    const audio = new Audio(`./assets/audios/${audioFile}`);
     audio.load();
-    audio.play();
+    audio.play().then();
   }
 }

@@ -1,25 +1,41 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {
+  Component, HostListener, OnDestroy, OnInit,
+} from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { MatDrawerMode } from '@angular/material/sidenav';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { takeUntil, tap } from 'rxjs/operators';
 import { GetPosts } from './store/actions/post.action';
-import { getPostsSelector, isPostsLoadingSelector } from './store/selectors/posts.selector';
+import {
+  getPostsSelector,
+  hasErrorSelector,
+  isCommentsLoadingSelector,
+  isPostsLoadingSelector,
+} from './store/selectors/posts.selector';
 import { Post } from './models/post.model';
-import {MatDrawerMode} from "@angular/material/sidenav";
+import {PostsService} from "./services/posts.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   isPostsLoading$: Observable<boolean>;
 
   posts$: Observable<Post[]>;
 
   sideBarMode: MatDrawerMode = 'side';
 
+  destroyed$: Subject<boolean> = new Subject<boolean>();
+
+  isCommentsLoading$: Observable<boolean>;
+
   constructor(
     private readonly store: Store,
+    private readonly snackBar: MatSnackBar,
+    protected readonly postsService: PostsService,
   ) {
   }
 
@@ -27,6 +43,13 @@ export class AppComponent implements OnInit {
     this.adjustSideBarOnMobileScreen();
     this.postsSelectors();
     this.loadAllPosts();
+    this.hasErrorListener();
+    this.selectCommentsLoading();
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   loadAllPosts(): void {
@@ -53,5 +76,25 @@ export class AppComponent implements OnInit {
     } else {
       this.sideBarMode = 'over';
     }
+  }
+
+  hasErrorListener() {
+    this.store.pipe(
+      select(hasErrorSelector),
+      tap((hasErrorValue) => {
+        if (hasErrorValue) {
+          this.postsService.newPostAudio('error.mp3');
+          this.snackBar.open('An Error has been occurred!', '', {
+            panelClass: 'failed-snack-bar',
+            duration: 2000,
+          });
+        }
+      }),
+      takeUntil(this.destroyed$),
+    ).subscribe();
+  }
+
+  selectCommentsLoading(): void {
+    this.isCommentsLoading$ = this.store.select(isCommentsLoadingSelector);
   }
 }

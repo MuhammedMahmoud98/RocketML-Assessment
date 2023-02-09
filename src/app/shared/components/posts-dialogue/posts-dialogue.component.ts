@@ -95,7 +95,9 @@ export class PostsDialogueComponent implements OnInit, OnDestroy, AfterViewInit 
   dialogListener(): void {
     this.postService.closeDialog$.pipe(
       tap((dialogValue) => {
+
         if (dialogValue) {
+          this.postService.newPostAudio();
           this.dialogRef.close();
           if (this.mode === 'add') {
             this.openSnackBar('success-snack-bar', 'Post has been added successfully');

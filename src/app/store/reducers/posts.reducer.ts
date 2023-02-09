@@ -66,7 +66,7 @@ export const postReducer = createReducer(
   on(AddPostSuccess, (state, action) => {
     const newPost = action.body;
     const updatedPosts = [...state.posts];
-    updatedPosts.unshift(newPost);
+    updatedPosts.unshift({ ...newPost, id: Math.ceil(Math.random() * 200) });
     return {
       ...state,
       posts: updatedPosts,

@@ -27,4 +27,10 @@ export class PostsService {
   deletePost(postId: number): Observable<object> {
     return this.http.delete<object>(`${environment.baseUrl}/${postId}`);
   }
+
+  newPostAudio() {
+    const audio = new Audio('./assets/audios/new-post.mp3');
+    audio.load();
+    audio.play();
+  }
 }
